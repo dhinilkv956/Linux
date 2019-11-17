@@ -1,0 +1,35 @@
+How to block outgoing mail to a specific mail id with postfix? 
+
+Blocking xyz@gmail.com using postfix
+
+Step1: Create a recipient file and add the -email address to block
+
+For Example:
+
+created recipient_access file under postfix /etc/postfix/recipient_access and add user mail id.
+
+#cat /etc/postfix/recipient_access
+ xyz@gmail.com  REJECT
+
+Step 2: 
+
+Update the recipienT file in postfix main.cf as below
+
+smtpd_recipient_restrictions = permit_mynetworks, check_recipient_access hash:/etc/postfix/recipient_access
+        check_sender_access hash:/etc/postfix/sender_checks,
+        permit_sasl_authenticated,
+        reject_invalid_hostname,
+        reject_non_fqdn_hostname,
+        -----
+        
+Step3 :
+
+Run the below commands after this 
+
+postmap hash:/etc/postfix/recipient_access
+
+postfix reload
+
+Step 4:
+
+Send test e-mail and see if it is blocked
