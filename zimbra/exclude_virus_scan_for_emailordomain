@@ -1,0 +1,24 @@
+exclude a domain or email ID from virus scan in zimbra
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Open the below conf file of amavisd.In zimbra the email attachment are scanned using amavis clamd scaner. 
+So some times we need to exclude some domains of our clients to bypass the scan and recieve email, for that please follow the below steps.
+
+
+
+vi /opt/zimbra/conf/amavisd.conf.in
+
+read_hash(\%whitelist_sender, '/opt/zimbra/conf/whitelist');
+@bypass_virus_checks_maps = (\%whitelist_sender);
+
+
+
+vi /opt/zimbra/conf/whitelist
+domain.com
+account@exmple.com
+
+
+
+Restart the service 
+
+sudo su - zimbra -c "zmamavisdctl restart" 
