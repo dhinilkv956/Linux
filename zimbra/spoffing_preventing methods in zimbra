@@ -1,2 +1,44 @@
+====================================================== 
 1. block-email-spoofing-by-display-name in zimbra
+====================================================== 
+
+
+
 https://imanudin.net/2018/12/13/how-to-block-email-spoofing-by-display-name/
+
+
+
+====================================================== 
+2. How to Restrict Sending to Distribution list
+====================================================== 
+
+
+ To deny outside email to the mail list
+-------------------------------------- 
+
+$su - zimbra
+$zmprov grr dl maillist@test.com dom test.com sendToDistList
+
+
+
+To check the mail is accepted by email of local mails
+----------------------------------------------------
+$zmprov ckr dl maillist@test.com test@test.com sendToDistList
+
+
+ALLOWED
+Via:
+    target type  : dl
+    target       : maillist@test.com
+    grantee type : grp
+    grantee      : test@test.com
+    right        : sendToDistList
+
+
+To check the outside domain has blocked to the mailist.
+------------------------------------------------------
+
+$zmprov ckr dl maillist@test.com test@gmail.com sendToDistList
+
+
+DENIED
