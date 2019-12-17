@@ -1,0 +1,29 @@
+To deny outside email to the mail list
+-------------------------------------- 
+
+$su - zimbra
+$zmprov grr dl maillist@test.com dom test.com sendToDistList
+
+
+
+To check the mail is accepted by email of local mails
+----------------------------------------------------
+$zmprov ckr dl maillist@test.com test@test.com sendToDistList
+
+
+ALLOWED
+Via:
+    target type  : dl
+    target       : maillist@test.com
+    grantee type : grp
+    grantee      : test@test.com
+    right        : sendToDistList
+
+
+To check the outside domain has blocked to the mailist.
+------------------------------------------------------
+
+$zmprov ckr dl maillist@test.com test@gmail.com sendToDistList
+
+
+DENIED
