@@ -1,0 +1,11 @@
+when installing GUI in centos 7 
+
+
+yum groupinstall "GNOME Desktop"
+error: 
+file /boot/efi/EFI/centos from install of fwupdate-efi-12-5.el7.centos.x86_64 conflicts with file from package grub2-common-1:2.02-0.64.el7.centos.noarch
+
+
+Resoltion: 
+yum update grub2-common
+
