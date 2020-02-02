@@ -1,0 +1,12 @@
+Display name spoofing blocking in proxmos email gateway:
+========================================================
+
+For that you can add a new "What" object, e.g., let's call it "Blocked Display Names".
+There add a "Match Field", this allows to match arbitrary email header with a "Regular Expression".
+For example use me\.aeServer.*?[^"'<>\s]+@ to match any occurrence of "me.aeServer" in front of the "real emails" @, it's just a heuristic though, false positives could in theory be matched, but rather unlikely.
+
+Use that What object to create a new Mail Filter rule in Incoming (or In and Out, depending on your needs) direction, maybe take a lower priority than the whitelist so that that is consulted first..
+
+Add the "Block" action and the "Blocked Display Names" What Object you just created and be sure the rule is enabled.
+You should be able to simply test it by sending such a mail through your server.
+When initial testing this you may want to use the "Quarantine" or a "Notify Admin" action, to avoid problems if something does not works out and be able to do some "dry-run" tests.
