@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#This script will copy the file to remote server using rsync and then create a folder with time stamp under the backup folder.
+#Then copy the file to Backup folder and then delete it.
+#Use case: ftp servers copy files to some remote server.
+
 #update the source,destination and backup directory
 
 source=/home/dhinil/script/
