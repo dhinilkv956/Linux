@@ -1,0 +1,33 @@
+#!/bin/bash
+
+#update the source,destination and backup directory
+
+source=/home/dhinil/script/
+dest=/root/mof/
+bkup=/home/dhinil/mof_backup/
+
+#rsync to remote server
+rsync -ari $source --chown=oracle:oinstall  root@172.24.2.27:$dest > /tmp/rsync_list.txt
+
+#time 
+current_time=$(date "+%Y.%m.%d-%H.%M") 
+
+#Collecting the file and folder list
+cat /tmp/rsync_list.txt | grep "<f" | awk '{ print $2 }' |sed '/^$/d' | sed "s#^#$source#" > /tmp/file_list.txt
+cat /tmp/rsync_list.txt | grep "<f..t" | awk '{ print $2 }' |sed '/^$/d' | sed "s#^#$source#" > /tmp/file_updated_list.txt
+[ -s /tmp/file_updated_list.txt ]
+result=`echo $?`
+cat /tmp/rsync_list.txt | grep ".d..t"  | awk '{ print $2 }' | sed "s#^#$bkup$current_time/#" > /tmp/folder_list.txt
+cat /tmp/file_list.txt  | sed "s#$source#$bkup$current_time/#" | sed 's%/[^/]*$%/%' > /tmp/file_dest_list.txt
+cat /tmp/file_updated_list.txt  | sed "s#$source#$bkup$current_time/#" | sed 's%/[^/]*$%/%' > /tmp/file_updated_dest_list.txt
+
+#Copying files to backup destination
+if [ $result == 0 ]; then
+        for i in `cat /tmp/file_updated_dest_list.txt`; do mkdir $i -p  ; done
+        paste /tmp/file_updated_list.txt  /tmp/file_updated_dest_list.txt | while read i j ; do cp -r $i $j ; done
+else
+        echo "No updated file"
+fi
+for i in `cat /tmp/folder_list.txt`; do mkdir $i -p  ; done
+paste /tmp/file_list.txt  /tmp/file_dest_list.txt | while read i j ; do cp -r $i $j ; done
+for i in `cat /tmp/file_list.txt`; do rm -f $i  ; done
