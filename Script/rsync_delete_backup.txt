@@ -3,6 +3,7 @@
 #This script will copy the file to remote server using rsync and then create a folder with time stamp under the backup folder.
 #Then copy the file to Backup folder and then delete it.
 #Use case: ftp servers copy files to some remote server.
+#app --> ftp ---> some remote servers
 
 #update the source,destination and backup directory
 
