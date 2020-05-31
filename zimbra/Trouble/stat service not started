@@ -1,0 +1,50 @@
+zimbra@server:~/zmstat/pid$ zmcontrol status
+Host flsmailserver.fls-g.com
+        amavis                  Running
+        antispam                Running
+        antivirus               Running
+        dnscache                Running
+        ldap                    Running
+        logger                  Running
+        mailbox                 Running
+        memcached               Running
+        mta                     Running
+        opendkim                Running
+        proxy                   Running
+        service webapp          Running
+        snmp                    Running
+        spell                   Running
+        stats                   Stopped
+        zimbra webapp           Running
+        zimbraAdmin webapp      Running
+        zimlet webapp           Running
+        zmconfigd               Running
+
+
+
+#zmstatctl status
+
+Running: zmstat-ldap
+Running: zmstat-io-x
+process 65416 in /opt/zimbra/zmstat/pid/zmstat-fd.pid not running
+Running: zmstat-nginx
+Running: zmstat-proc
+Running: zmstat-mysql
+Running: zmstat-allprocs
+Running: zmstat-io
+Running: zmstat-cpu
+Running: zmstat-mtaqueue
+Running: zmstat-vm
+Running: zmstat-df
+
+
+
+resolution :
+https://www.linuxhelp.com/questions/zimbra-stats-service-is-not-running
+
+  # su zimbra
+  $ zmstatctl status   
+  $ /cd /opt/zimbra/zmstat/pid/
+  $ rm zmstat-fd-real.pid ( or rename the pid)
+  $ zmstatctl start
+  $ zmstatctl status
